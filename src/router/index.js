@@ -46,7 +46,7 @@ router.beforeEach(async (to, from, next) => {
         // 토큰이 만료된 경우
         alert('세션이 만료되었습니다. 다시 로그인해 주세요.');
       }
-      next('/user/login');
+      next();
     } else {
       next();
     }

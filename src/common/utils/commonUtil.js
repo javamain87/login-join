@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+import VueJwtDecode from 'vue-jwt-decode'
 
 export const validateToken = async () => {
   const token = localStorage.getItem('token');
@@ -9,10 +9,10 @@ export const validateToken = async () => {
   }
 
   try {
-    const decodedToken = jwtDecode(token);
+    const decodedToken = VueJwtDecode.decode(token);
     const currentTime = Date.now() / 1000;
 
-    if (decodedToken.exp < currentTime) {
+    if (VueJwtDecode.Date < currentTime) {
       localStorage.removeItem('token');
       return { isValid: false, reason: 'expired' };
     }
@@ -22,7 +22,7 @@ export const validateToken = async () => {
       headers: { 'Authorization': `Bearer ${token}` }
     });
 
-    return { isValid: response.data.isValid, reason: response.data.isValid ? 'valid' : 'invalid' };
+    return response;
   } catch (error) {
     console.error('Token validation error:', error);
     return { isValid: false, reason: 'error' };
